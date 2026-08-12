@@ -1,0 +1,12 @@
+# Normalise line endings across machines.
+#
+# A Windows checkout writes CRLF and a macOS/Linux checkout writes LF, so
+# without this git sees EVERY LINE as changed the moment the file is saved on
+# the other platform — turning a one-line edit into a whole-file diff.
+#
+# So: store everything as LF in the repository, whatever each machine uses
+# locally.
+* text=auto eol=lf
+
+# Lockfiles are generated. Marking them keeps them out of merge arguments.
+package-lock.json linguist-generated=true

@@ -1,0 +1,4 @@
+# Deliberately small. Everything else comes from the standard library.
+
+fastapi
+uvicorn[standard]

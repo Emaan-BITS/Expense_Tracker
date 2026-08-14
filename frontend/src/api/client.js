@@ -43,3 +43,14 @@ export const deleteExpense = (id) => request(`/expenses/${id}`, { method: 'DELET
 // No updateExpense helper here on purpose. PATCH /api/expenses/{id} exists,
 // but editing isn't one of the user stories, so nothing in the UI calls it.
 // Add the helper back the day you build an edit button.
+
+export const listBudgets = () => request('/budgets')
+
+export const setBudget = (categoryId, limitCents) =>
+  request(`/budgets/${categoryId}`, {
+    method: 'PUT',
+    body: JSON.stringify({ limit_cents: limitCents }),
+  })
+
+export const deleteBudget = (categoryId) =>
+  request(`/budgets/${categoryId}`, { method: 'DELETE' })

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import BudgetsPanel from './features/budgets/BudgetsPanel'
 import ExpensesPanel from './features/expenses/ExpensesPanel'
 
 /* Features register themselves in TABS rather than being hardcoded into the
@@ -7,6 +8,7 @@ import ExpensesPanel from './features/expenses/ExpensesPanel'
  * src/features/. */
 const TABS = [
   { id: 'expenses', label: 'Expenses', Panel: ExpensesPanel },
+  { id: 'budgets', label: 'Budgets', Panel: BudgetsPanel },
 ]
 
 export default function App() {

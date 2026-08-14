@@ -24,3 +24,11 @@ CREATE TABLE IF NOT EXISTS expenses (
 
 CREATE INDEX IF NOT EXISTS idx_expenses_category ON expenses(category_id);
 CREATE INDEX IF NOT EXISTS idx_expenses_spent_on ON expenses(spent_on);
+
+-- One monthly spending limit per category. category_id is the PRIMARY KEY
+-- rather than a plain column, which is what enforces "at most one budget per
+-- category" and lets the write be a single upsert instead of a check-then-write.
+CREATE TABLE IF NOT EXISTS budgets (
+    category_id INTEGER PRIMARY KEY REFERENCES categories(id),
+    limit_cents INTEGER NOT NULL
+);

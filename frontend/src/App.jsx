@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import BudgetsPanel from './features/budgets/BudgetsPanel'
 import ExpensesPanel from './features/expenses/ExpensesPanel'
+import ReportsPanel from './features/reports/ReportsPanel'
 
 /* Features register themselves in TABS rather than being hardcoded into the
  * markup below, so adding one is a single line here and a folder under
@@ -9,6 +10,7 @@ import ExpensesPanel from './features/expenses/ExpensesPanel'
 const TABS = [
   { id: 'expenses', label: 'Expenses', Panel: ExpensesPanel },
   { id: 'budgets', label: 'Budgets', Panel: BudgetsPanel },
+  { id: 'reports', label: 'Reports', Panel: ReportsPanel },
 ]
 
 export default function App() {

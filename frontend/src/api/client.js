@@ -40,6 +40,8 @@ export const createExpense = (data) =>
 
 export const deleteExpense = (id) => request(`/expenses/${id}`, { method: 'DELETE' })
 
+
+
 // No updateExpense helper here on purpose. PATCH /api/expenses/{id} exists,
 // but editing isn't one of the user stories, so nothing in the UI calls it.
 // Add the helper back the day you build an edit button.
@@ -54,3 +56,11 @@ export const setBudget = (categoryId, limitCents) =>
 
 export const deleteBudget = (categoryId) =>
   request(`/budgets/${categoryId}`, { method: 'DELETE' })
+
+export const getSummary = () => request('/reports/summary')
+
+export const getMonthly = () => request('/reports/monthly')
+
+// A plain URL, not a request() call — this one goes straight to an <a download>
+// and is fetched by the browser, so it needs the /api prefix here.
+export const CSV_EXPORT_URL = '/api/reports/export.csv'

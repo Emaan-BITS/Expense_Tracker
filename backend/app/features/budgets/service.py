@@ -55,3 +55,38 @@ def delete_budget(category_id: int) -> bool:
             ).rowcount
             > 0
         )
+
+
+# ===========================================================================
+# PART TWO — spend against budget
+# ===========================================================================
+
+
+def budget_status(month: str) -> list[dict]:
+    """Every budget with the amount spent against it in `month` (YYYY-MM).
+
+    The month filter sits in the ON clause, not in WHERE. That distinction is
+    the whole query: in a WHERE clause it would be applied after the join, so
+    any budget with no spending this month would be filtered out entirely and
+    silently vanish from the list — exactly the budgets you most want to see.
+    In the ON clause it only limits which expenses attach, and the budget row
+    survives with a zero.
+    """
+    with get_conn() as conn:
+        rows = conn.execute(
+            """
+            SELECT b.category_id,
+                   c.name AS category_name,
+                   b.limit_cents,
+                   COALESCE(SUM(e.amount_cents), 0) AS spent_cents
+              FROM budgets b
+              JOIN categories c ON c.id = b.category_id
+              LEFT JOIN expenses e
+                     ON e.category_id = b.category_id
+                    AND strftime('%Y-%m', e.spent_on) = ?
+             GROUP BY b.category_id, c.name, b.limit_cents
+             ORDER BY c.name
+            """,
+            (month,),
+        ).fetchall()
+    return [dict(row) for row in rows]

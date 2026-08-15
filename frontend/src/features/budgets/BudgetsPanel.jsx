@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { deleteBudget, listBudgets, listCategories } from '../../api/client.js'
+import { deleteBudget, getBudgetStatus, listCategories } from '../../api/client.js'
 import BudgetForm from './BudgetForm.jsx'
+import BudgetProgress from './BudgetProgress.jsx'
 
 const formatMoney = (cents) => (cents / 100).toFixed(2)
 
@@ -14,7 +15,8 @@ export default function BudgetsPanel() {
   const reload = useCallback(async () => {
     try {
       setError(null)
-      setBudgets(await listBudgets())
+      // part two: /status returns the same rows plus this month's spend
+      setBudgets(await getBudgetStatus())
     } catch (err) {
       setError(err.message)
     } finally {
@@ -55,6 +57,8 @@ export default function BudgetsPanel() {
               <tr>
                 <th>Category</th>
                 <th className="num">Monthly limit</th>
+                <th className="num">Spent</th>
+                <th>Used</th>
                 <th />
               </tr>
             </thead>
@@ -63,6 +67,10 @@ export default function BudgetsPanel() {
                 <tr key={budget.category_id}>
                   <td>{budget.category_name}</td>
                   <td className="num">{formatMoney(budget.limit_cents)}</td>
+                  <td className="num">{formatMoney(budget.spent_cents)}</td>
+                  <td>
+                    <BudgetProgress pctUsed={budget.pct_used} />
+                  </td>
                   <td className="num">
                     <button
                       className="btn btn--danger"

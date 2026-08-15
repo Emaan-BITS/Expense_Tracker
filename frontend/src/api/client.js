@@ -54,8 +54,11 @@ export const setBudget = (categoryId, limitCents) =>
     body: JSON.stringify({ limit_cents: limitCents }),
   })
 
-export const deleteBudget = (categoryId) =>
-  request(`/budgets/${categoryId}`, { method: 'DELETE' })
+export const deleteBudget = (categoryId) => request(`/budgets/${categoryId}`, { method: 'DELETE' })
+
+// ---- part two -------------------------------------------------------------
+
+export const getBudgetStatus = () => request('/budgets/status')
 
 export const getSummary = () => request('/reports/summary')
 
